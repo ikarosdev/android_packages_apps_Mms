@@ -884,10 +884,7 @@
     <string name="pref_summary_mms_signature">Append text to the end of all outgoing message</string>
     <string name="pref_title_mms_signature_auto_append">Signature auto-append</string>
     <string name="pref_summary_mms_signature_auto_append">Setting for signature auto-append</string>
-    <string name="pref_dialogtitle_mms_signature_auto_append">Auto-append signature?</string>
-    <string name="pref_mms_signature_auto_append_off">Manual/Off</string>
-    <string name="pref_mms_signature_auto_append_on_compose">Append on Compose</string>
-    <string name="pref_mms_signature_auto_append_on_send">Append on Send</string>
+    <string name="pref_dialogtitle_mms_signature_auto_append">Auto-append signature</string>
 
 </resources>
 

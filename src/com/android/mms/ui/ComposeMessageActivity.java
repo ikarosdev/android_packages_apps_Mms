@@ -1744,7 +1744,7 @@ public class ComposeMessageActivity extends Activity
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences((Context)ComposeMessageActivity.this);
         mSignature = prefs.getString(MessagingPreferenceActivity.SIGNATURE, "");
-        mSignatureAutoAppend = prefs.getString(MessagingPreferenceActivity.SIGNATURE_AUTO_APPEND, "0");
+        mSignatureAutoAppend = prefs.getString(MessagingPreferenceActivity.SIGNATURE_AUTO_APPEND, "append_off");
         mBlackBackground = prefs.getBoolean(MessagingPreferenceActivity.BLACK_BACKGROUND, false);
         mBackToAllThreads = prefs.getBoolean(MessagingPreferenceActivity.BACK_TO_ALL_THREADS, false);
         mSendOnEnter = prefs.getBoolean(MessagingPreferenceActivity.SEND_ON_ENTER, true);
@@ -2240,8 +2240,9 @@ public class ComposeMessageActivity extends Activity
             mTextEditor.setHint(R.string.open_keyboard_to_compose_message);
         }
         // Auto-append signature on compose
-        if((mSignature != null) && mSignatureAutoAppend.equals("1") && (mMsgText.length() == 0)) {
+        if((mSignature != null) && mSignatureAutoAppend.equals("append_compose")) {
             appendSignature();
+	}
     }
 
     @Override
@@ -3368,7 +3369,7 @@ public class ComposeMessageActivity extends Activity
         }
 
         // Auto-append signature on send
-        if((mSignature != null) && mSignatureAutoAppend.equals("2")) {
+        if((mSignature != null) && mSignatureAutoAppend.equals("append_send")) {
             appendSignature();
         }
 
