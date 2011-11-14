@@ -223,6 +223,7 @@ public class ComposeMessageActivity extends Activity
     private static final int MENU_SEND                  = 4;
     private static final int MENU_CALL_RECIPIENT        = 5;
     private static final int MENU_CONVERSATION_LIST     = 6;
+    private static final int MENU_APPEND_SIGNATURE      = 7;
 
     // Context menu ID
     private static final int MENU_VIEW_CONTACT          = 12;
@@ -272,6 +273,8 @@ public class ComposeMessageActivity extends Activity
 
     private boolean mBlackBackground;       // Option for switch background from white to black
     private boolean mBackToAllThreads;      // Always return to all threads list
+    private CharSequence mSignature;        // Append text at the end of all outgoing messages
+    private String mSignatureAutoAppend;    // Setting for Signature auto-append
 
     private View mTopPanel;                 // View containing the recipient and subject editors
     private View mBottomPanel;              // View containing the text editor, send button, ec.
@@ -1740,6 +1743,8 @@ public class ComposeMessageActivity extends Activity
         super.onCreate(savedInstanceState);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences((Context)ComposeMessageActivity.this);
+        mSignature = prefs.getString(MessagingPreferenceActivity.SIGNATURE, "");
+        mSignatureAutoAppend = prefs.getString(MessagingPreferenceActivity.SIGNATURE_AUTO_APPEND, "0");
         mBlackBackground = prefs.getBoolean(MessagingPreferenceActivity.BLACK_BACKGROUND, false);
         mBackToAllThreads = prefs.getBoolean(MessagingPreferenceActivity.BACK_TO_ALL_THREADS, false);
         mSendOnEnter = prefs.getBoolean(MessagingPreferenceActivity.SEND_ON_ENTER, true);
@@ -2234,6 +2239,9 @@ public class ComposeMessageActivity extends Activity
             mTextEditor.setFocusable(false);
             mTextEditor.setHint(R.string.open_keyboard_to_compose_message);
         }
+        // Auto-append signature on compose
+        if((mSignature != null) && mSignatureAutoAppend.equals("1") && (mMsgText.length() == 0)) {
+            appendSignature();
     }
 
     @Override
@@ -2426,6 +2434,11 @@ public class ComposeMessageActivity extends Activity
         startActivity(dialIntent);
     }
 
+    private void appendSignature() {
+        mSignature = "\n" + mSignature;
+        mTextEditor.append(mSignature);
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
@@ -2477,6 +2490,9 @@ public class ComposeMessageActivity extends Activity
 
         menu.add(0, MENU_CONVERSATION_LIST, 0, R.string.all_threads).setIcon(
                 R.drawable.ic_menu_friendslist);
+        if(!mSignature.equals("")) {
+            menu.add(0, MENU_APPEND_SIGNATURE, 0, R.string.append_signature).setIcon(com.android.internal.R.drawable.ic_menu_edit);
+        }
 
         buildAddAddressToContactMenuItem(menu);
         return true;
@@ -2529,6 +2545,10 @@ public class ComposeMessageActivity extends Activity
                         goToConversationList();
                     }
                 });
+                break;
+            case MENU_APPEND_SIGNATURE:
+                // Append signature manually
+                appendSignature();
                 break;
             case MENU_CALL_RECIPIENT:
                 dialRecipient();
@@ -3345,6 +3365,11 @@ public class ComposeMessageActivity extends Activity
                     Log.e(TAG, "Cannot find EmergencyCallbackModeExitDialog", e);
                 }
             }
+        }
+
+        // Auto-append signature on send
+        if((mSignature != null) && mSignatureAutoAppend.equals("2")) {
+            appendSignature();
         }
 
         if (!mSendingMessage) {

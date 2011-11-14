@@ -781,6 +781,9 @@
          changed -->
     <string name="error_state_text">The state of threads and recipients is inconsistent. Please capture a bug report and send it to android-sms-bugs@google.com</string>
 
+    <!-- Menu item in conversation screen for append signature -->
+    <string name="append_signature">Append signature</string>
+
     <!-- Extra Settings: -->
     <string name="pref_extra_settings">Extra settings</string>
 
@@ -875,5 +878,16 @@
     <string name="dialog_phone_goggles_unauthorized">Sending a SMS may not be wise at this time.</string>
     <string name="dialog_phone_goggles_ok">Send</string>
     <string name="dialog_phone_goggles_cancel">Save draft</string>
+
+    <!-- Signature -->
+    <string name="pref_title_mms_signature">Signature</string>
+    <string name="pref_summary_mms_signature">Append text to the end of all outgoing message</string>
+    <string name="pref_title_mms_signature_auto_append">Signature auto-append</string>
+    <string name="pref_summary_mms_signature_auto_append">Setting for signature auto-append</string>
+    <string name="pref_dialogtitle_mms_signature_auto_append">Auto-append signature?</string>
+    <string name="pref_mms_signature_auto_append_off">Manual/Off</string>
+    <string name="pref_mms_signature_auto_append_on_compose">Append on Compose</string>
+    <string name="pref_mms_signature_auto_append_on_send">Append on Send</string>
+
 </resources>
 
